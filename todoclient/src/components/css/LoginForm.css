@@ -1,0 +1,25 @@
+@media all and (min-width: 480px) {
+  .Login {
+    margin-top: 60px;
+	color: #5d5d5d;
+	background: #f2f2f2;
+	padding: 26px;
+	border-radius: 10px;
+
+	& input,
+	& button {
+		font-size: 18px;
+		margin: 16px 0;
+	}
+
+	& > div {
+		text-align: center;
+	}
+	
+  }
+
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
