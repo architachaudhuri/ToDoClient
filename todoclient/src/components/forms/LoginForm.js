@@ -3,8 +3,9 @@ import React from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { withRouter } from "react-router-dom";
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -26,11 +27,17 @@ export default class LoginForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    //const isValidForm = this.validateForm();
-	  //console.log("Is form valid:",isValidForm);
-    //console.log('Get URL:http://localhost:9010/todo/login/'+this.state.userName+'/'+this.state.password)
-	  axios.get('http://localhost:9010/todo/login/'+this.state.userName+'/'+this.state.password)
-      .then(response => console.log(response))
+    const redirect = this.props;
+    axios.get('http://localhost:9010/todo/login/'+this.state.userName+'/'+this.state.password)
+      .then(function(response){
+        console.log(response); 
+          if(response.data.statusCode==='200'){
+            console.log('success');
+            redirect.history.push("/dashboard");
+          } else {
+            console.log('user not authorized');
+          }
+      })
   }
 
   render() {
@@ -73,5 +80,10 @@ export default class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-	submit: PropTypes.func
+	submit: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
 };
+
+export default withRouter(LoginForm);
